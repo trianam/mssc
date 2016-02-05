@@ -14,6 +14,7 @@
 \usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{amsthm}
+\usepackage{amsmath}
 \usepackage[hidelinks,breaklinks=true]{hyperref}
 \usepackage{xcolor}
 \usepackage{listings}
@@ -119,7 +120,41 @@ catena in $\mathbb{G}$ (punto 2).
 \end{enumerate}
 
 \section*{7.6}
+\paragraph{Esercizio:}
+Fornire semantica operazionale e denotazionale del programma
+$$
+\mathbf{letrec} f(x) \Leftarrow f(x) \mathbf{in} f(5)  
+$$
 
+\paragraph{Soluzione:}
+Cominciando con la semantica operazionale con chiamata per nome si ha:
+$$
+f(5) \xrightarrow{(FUN)}_D f(5) \xrightarrow{(FUN)}_D \dots
+$$
+e in modo simile per quella con chiamata per valore usando
+$(FUN')$. Quindi divergono.
+
+Per la semantica denotazionale, usando un approccio bottom up, si ha:
+\begin{eqnarray*}
+  \mathcal{T}[[5]]&=&\lambda f.\lambda x. 5\\
+  \mathcal{T}[[x]]&=&\lambda f.\lambda x. x\\
+  \mathcal{T}[[f(5)]]&=&\lambda f.\lambda x. f(\mathcal{T}[[5]]fx)\\
+  &=&\lambda f.\lambda x.f(5)\\
+  \mathcal{T}[[f(x)]]&=&\lambda f.\lambda x. f(\mathcal{T}[[x]]fx)\\
+  &=&\lambda f.\lambda x.f((\lambda f.\lambda x'.x')fx)\\
+  &=&\lambda f.\lambda x.f(x)\\
+  \mathcal{D}[[f(x)\Leftarrow f(x)]]&=&fix(\lambda
+  f.\mathcal{T}[[f(x)]]f)\\
+  &=&fix(\lambda f.(\lambda f'.\lambda x.f'(x))f)\\
+  &=&fix(\lambda f.\lambda x. f(x))\\
+  &=&\lambda x.\perp\\
+  &=&\Omega\\
+  \mathcal{P}[[\mathbf{letrec} f(x) \Leftarrow f(x) \mathbf{in} f(5)
+  ]]&=&\mathcal{T}[[f(5)]]\mathcal{D}[[f(x)\Leftarrow f(x)]]0\\
+  &=&(\lambda f.\lambda x.f(5))\Omega 0\\
+  &=&\Omega 5\\
+  &=&\perp
+\end{eqnarray*}
 \section*{8.11}
 
 \section*{9.7}
