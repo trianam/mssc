@@ -66,6 +66,57 @@ e anche:
 quindi la tesi \`e dimostrata perch\`e i due termini riducono alla
 stessa forma. 
 \section*{6.10}
+\paragraph{Esercizio:}
+Sia $D$ un cpo. Una funzione $r : D \rightarrow D$ si dice idempotente
+se $r(r(x)) = r(x)$, per ogni $x \in D$.
+Dimostrare che l’insieme di tutte le funzioni continue idempotenti da
+$D$ in $D$ è un cpo.
+\paragraph{Soluzione:}
+Poich\'e $D$ \`e un cpo, lo spazio delle funzioni continue da $D$ a
+$D$ denotato da $[D\rightarrow D] = (D\rightarrow D, \sqsubseteq)$,
+cos\`i come in definizione 6.33, \`e un cpo. L'insieme delle funzioni
+continue e idempotenti $G$ \`e un sottoinsieme dell'insieme delle funzioni
+continue $D\rightarrow D$, quindi considerando $\sqsubseteq_G$ la
+restrizione di $\sqsubseteq$ a $G$, si ha che $\mathbb{G} = (G,\sqsubseteq_G)$ \`e
+un poset. Per dimostrare che $\mathbb{G}$ \`e anche un cpo \`e
+necessario mostrare che con la restrizione da $[D\rightarrow D]$ a
+$\mathbb{G}$ vengono mantenuti il minimo (punto 1) e i $\sup$ di ogni
+catena in $\mathbb{G}$ (punto 2).
+\begin{enumerate}
+\item Il minimo di $[D\rightarrow D]$ \`e $\Omega\equiv\lambda
+  x.\perp_D$ con $\perp_D$ il minimo di $D$. Tale funzione \`e anche
+  idempotente perch\'e $\Omega(x)=\Omega(\Omega(x))=\perp_D$ per
+  qualunque $x$, quindi appartiene anche a $G$.
+\item Data una generica catena di funzioni continue e idempotenti
+  $\{f_i|i\in I\}$, \`e necessario dimostrare che il $\sup$ di tale
+  catena, che sappiamo dalla dimostrazione del teorema 6.34 essere:
+  $$g\equiv\lambda x.\sup\{ f_i x|i\in I\}$$
+  sia $\in G$ e quindi idempotente, e quindi che $g(g x)=g(x)$ per
+  ogni $x$.
+
+  La dimostrazione procede nel seguente modo:
+  \begin{eqnarray*}
+    g(g x)&=&(\lambda x'.\sup\{f_i x'|i\in I\})((\lambda x''.\sup\{f_i x''|i\in I\})x)\\
+    &=&(\lambda x'.\sup\{f_i x'|i\in I\})\sup\{f_i x|i\in I\}\\
+    &=&\sup\{f_i (\sup\{f_j x|j\in I\})|i\in I\}
+  \end{eqnarray*}
+  e per la continuit\`a delle $f_i$
+  \begin{eqnarray*}
+    &=&\sup\{\sup\{f_i (f_j x)|j\in I\}|i\in I\}
+  \end{eqnarray*}
+  a questo punto disponendo in forma matriciale ordinata gli $f_i$ e
+  gli $f_j$ \`e possibile applicare la proposizione 6.27(2) e si
+  ottiene
+  \begin{eqnarray*}
+    &=&\sup\{f_i(f_i x)|i\in I\}
+  \end{eqnarray*}
+  e poich\'e tutte le $f_i$ sono idempotenti
+  \begin{eqnarray*}
+    &=&\sup\{f_i x|i\in I\}\\
+    &=&g x
+  \end{eqnarray*}
+  \qed
+\end{enumerate}
 
 \section*{7.6}
 
