@@ -18,6 +18,7 @@
 \usepackage[hidelinks,breaklinks=true]{hyperref}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage{stmaryrd}
 
 \newcommand{\betaReduction}{\ensuremath{\longrightarrow_{\beta}}}
 \newcommand{\betaReductionS}{\ensuremath{\Longrightarrow_{\beta}}}
@@ -161,6 +162,109 @@ programma diverge, e infatti
 la valutazione della semantica denotazionale lo conferma restituendo, come
 prevedibile, un risultato non definito.
 \section*{8.11}
+\paragraph{Esercizio:} Si aggiunga al linguaggio TINY un comando $\mathbf{stop}$
+con la semantica informale di far terminare il 
+programma. Se ne dia la semantica e si dimostri che $c 1 ; \mathbf{stop}$ e $c 1 ;
+\mathbf{stop}; c 2$ sono semanticamente
+equivalenti.
+
+\paragraph{Soluzione:}
+\`E possibile estendere la semantica operazionale in modo da gestire
+lo $\mathbf{stop}$ modificando leggermente $(\text{Seq}_2)$ in:
+$$
+\frac{<c_1,\sigma>\ \longrightarrow\ <c_1',\sigma'>}{<c_1;c_2,\sigma>\
+  \longrightarrow\ <c_1';c_2,\sigma'>}(c_1'\neq\mathbf{stop})\qquad (\text{Seq}_2')
+$$
+e aggiungendo le due regole
+\begin{align*}
+<\mathbf{stop},\sigma>&\longrightarrow{} <\mathbf{noaction},\sigma>&(\text{Stop}_1)\\
+<\mathbf{stop};c,\sigma>&\longrightarrow{} <\mathbf{stop},\sigma>&(\text{Stop}_2)
+\end{align*}
+
+Per quanto riguarda la semantica denotazionale \`e pi\`u difficile
+ottenere lo stesso risultato. \`E necessario cambiare anche il dominio
+delle funzioni di interpretazione semantica dei comandi in:
+$$
+\mathcal{C}: Com\longrightarrow{}\mathbb{STATO}\longrightarrow{}(\mathbb{STATO}+(\mathbb{STATO}\times\{stop\})+\{error\})
+$$
+per aggiungere la possibilit\`a che la computazione ritorni una coppia
+$<\sigma,stop>$ che va letta come lo stato $\sigma$ con
+l'aggiunta dell'informazione che la computazione \`e terminata a causa
+di un comando $\mathbf{stop}$. Va quindi modificata la denotazione
+corrispondente alla sequenzializzazione di comandi in:
+\begin{align*}
+  \mathcal{C}\llbracket c_1;c_2\rrbracket&= \lambda\sigma.cases (\mathcal{C}\llbracket c_1\rrbracket\sigma)
+  of\\
+&\qquad\qquad\sigma':\mathcal{C}\llbracket c_2\rrbracket\sigma',\\
+&\qquad\qquad<\sigma',stop>:<\sigma',stop>,\\
+&\qquad\qquad error : error;\\
+&\qquad endcases
+\end{align*}
+e aggiunta la denotazione per lo $\mathbf{stop}$:
+$$
+\mathcal{C}\llbracket\mathbf{stop}\rrbracket=\lambda\sigma.<\sigma,\mathbf{stop}>
+$$
+Con queste aggiunte andrebbero anche riviste e  modificate la dimostrazione di
+equivalenza tra le due semantiche e la formalizzazione in punto fisso della
+denotazione del $\mathbf{while}$ che fa uso della
+sequenzializzazione. Queste ultime modifiche vengono tralasciate
+perch\'e non inerenti all'esercizio.
+
+Per dimostrare che $c_1;\mathbf{stop}$ e $c_1;\mathbf{stop};c_2$ sono
+semanticamente equivalenti, si pu\`o usare la semantica operazionale
+per mostrare che le computazioni dei due programmi portano a
+configurazioni finali con stati identici, dato
+un qualsiasi
+stato iniziale $\sigma$.
+Per $c_1;\mathbf{stop}$ vale che:
+\begin{gather*}
+  <c_1;stop,\sigma>\\
+  \downarrow_{(\text{Seq}_2')}\\
+  <stop,\sigma'>\\
+  \downarrow_{(\text{Stop}_1)}\\
+  <noaction,\sigma'>\\
+\end{gather*}
+dove \`e stata usata l'istanza di $(\text{Seq}_2')$:
+$$
+\frac{<c_1,\sigma> \longrightarrow{}
+  <c_1',\sigma'>}{<c_1;\mathbf{stop},\sigma> \longrightarrow{}
+  <\mathbf{stop},\sigma'>}
+$$
+
+Per $c_1;\mathbf{stop};c_2$ vale che:
+\begin{gather*}
+  <c_1;stop;c_2,\sigma>\\
+  \downarrow_{(\text{Seq}_2')}\\
+  <stop;c_2,\sigma'>\\
+  \downarrow_{(\text{Stop}_2)}\\
+  <stop,\sigma'>\\
+  \downarrow_{(\text{Stop}_1)}\\
+  <noaction,\sigma'>\\
+\end{gather*}
+dove \`e stata usata l'istanza di $(\text{Seq}_2')$:
+$$
+\frac{<c_1,\sigma> \longrightarrow{}
+  <c_1',\sigma'>}{<c_1;\mathbf{stop};c_2,\sigma> \longrightarrow{}
+  <\mathbf{stop};c_2,\sigma'>}
+$$
+con $c_1'$ e $\sigma'$ gli stessi di prima in quanto la premessa è la
+stessa. Quindi poich\'e entrambe le computazioni hanno lo stesso stato
+finale $<\mathbf{noaction},\sigma'>$, la tesi
+\`e vera.
+
+\`E possibile anche dimostrare l'equivalenza usando la semantica
+denotazionale, osservando che sia nella denotazione di $\mathcal{C}\llbracket
+c_1;\mathbf{stop}\rrbracket$ che in quella di $\mathcal{C}\llbracket
+c_1;\mathbf{stop};c_2\rrbracket$ viene prima valutato $\mathcal{C}\llbracket
+c_1\rrbracket$ e poi applicato $\sigma'$ a $\mathcal{C}\llbracket
+\mathbf{stop}\rrbracket$ in un caso e $\mathcal{C}\llbracket
+\mathbf{stop};c_2\rrbracket$ nell'altro. In seguito l'unica differenza
+\`e che nel primo caso vale subito che $\mathcal{C}\llbracket
+\mathbf{stop}\rrbracket\sigma'$ \`e $<\sigma',stop>$, nel secondo caso
+c'è un ulteriore passaggio in cui viene usato il secondo \emph{case}
+della denotazione della sequenzializzazione e che per\`o non cambia il
+risultato.
+
 
 \section*{9.7}
 
