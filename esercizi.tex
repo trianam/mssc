@@ -11,17 +11,31 @@
 \usepackage[italian]{babel}
 \usepackage{microtype}
 \usepackage{acronym}
-\usepackage{mathtools}
+\usepackage[fleqn]{mathtools}
 \usepackage{amsfonts}
 \usepackage{amsthm}
-\usepackage{amsmath}
-\usepackage[hidelinks,breaklinks=true]{hyperref}
 \usepackage{xcolor}
+%\usepackage[hidelinks,breaklinks=true]{hyperref}
 \usepackage{listings}
 \usepackage{stmaryrd}
+%\usepackage{ornament}
+\usepackage{tikz}
+\usepackage[fleqn]{amsmath}
 
 \newcommand{\betaReduction}{\ensuremath{\longrightarrow_{\beta}}}
 \newcommand{\betaReductionS}{\ensuremath{\Longrightarrow_{\beta}}}
+
+% \newcommand{\sectionline}{
+%   \begin{center}
+%     \resizebox{0.5\linewidth}{1ex}{
+%       \begin{tikzpicture}
+%         \node  (C) at (0,0) {};
+%         \node (D) at (9,0) {};
+%         \path (C) to [ornament=83] (D);
+%       \end{tikzpicture}
+%     }
+%   \end{center}
+% }
 
 \author{
   {\Large Stefano Martina}\\
@@ -195,9 +209,9 @@ corrispondente alla sequenzializzazione di comandi in:
 \begin{align*}
   \mathcal{C}\llbracket c_1;c_2\rrbracket&= \lambda\sigma.cases (\mathcal{C}\llbracket c_1\rrbracket\sigma)
   of\\
-&\qquad\qquad\sigma':\mathcal{C}\llbracket c_2\rrbracket\sigma',\\
-&\qquad\qquad<\sigma',stop>:<\sigma',stop>,\\
-&\qquad\qquad error : error;\\
+&\qquad\qquad\sigma':\mathcal{C}\llbracket c_2\rrbracket\sigma';\\
+&\qquad\qquad<\sigma',stop>:<\sigma',stop>;\\
+&\qquad\qquad error : error\\
 &\qquad endcases
 \end{align*}
 e aggiunta la denotazione per lo $\mathbf{stop}$:
@@ -267,7 +281,99 @@ risultato.
 
 
 \section*{9.7}
+\paragraph{Esercizio:} Estendere il linguaggio SMALL introducendo i
+comandi $\mathbf{restart}$ ed $\mathbf{exit}$, il cui significato è di 
+saltare rispettivamente all’inizio ed alla fine del blocco più
+interno.
 
+\paragraph{Soluzione:} Per gestire i due comandi richiesti \`e
+necessario modificare il dominio:
+\begin{equation*}
+  \begin{multlined}  
+    \mathcal{C}:Com \longrightarrow{} \mathbb{AMB}
+    \longrightarrow{} \mathbb{MEM} \longrightarrow{}\\
+    \qquad\qquad\qquad\qquad((\mathbb{MEM}\times\{restart, stop, normal\})+\{error\})
+  \end{multlined}  
+\end{equation*}
+
+che aggiunge la possibilit\`a per i comandi di indicare il tipo di
+ritorno in abbinamento al valore di ritorno della
+memoria. Informalmente $normal$ indica che la valutazione del comando
+che li ha ritornati
+non ha portato a nessun comando di $\mathbf{stop}$ o
+$\mathbf{restart}$; $stop$ e $restart$ indicano che la valutazione del
+comando ha portato rispettivamente ad uno $\mathbf{stop}$ e ad un
+$\mathbf{restart}$.
+
+Per gestire il cambio di flusso del programma vengono modificate le regole di interpretazione semantica di programmi, di blocchi, e
+della sequenzializzazione nel seguente modo:
+\begin{align*}
+  \mathcal{P}\llbracket\mathbf{program}\ c\rrbracket in\ =\ &fix(\lambda\Theta.cases
+  (\mathcal{C}\llbracket c\rrbracket\rho_0(\lambda
+  x.unused)[in/lin][nil/lout]) of\\
+  &\qquad<\sigma,normal> : \sigma(lout);\\
+  &\qquad<\sigma,stop> : \sigma(lout);\\
+  &\qquad<\sigma,restart> : \Theta\\
+  &endcases)
+\end{align*}
+\begin{align*}
+  \mathcal{C}\llbracket\mathbf{begin}\ d;\ c\
+  \mathbf{end}\rrbracket\rho\ =\ &fix(\lambda\Theta.\mathcal{D}\llbracket d\rrbracket\rho\
+  \star\ \lambda\rho'.\mathcal{C}\llbracket c\rrbracket\rho[\rho']\
+  \star\ \lambda\sigma s.\ cases\ s\ in:\\
+  & \qquad normal:<\sigma,normal>;\\
+  & \qquad stop:<\sigma,normal>;\\
+  & \qquad restart:\Theta\\
+  &endcases)
+\end{align*}
+\begin{align*}
+  \mathcal{C}\llbracket c_1;c_2\rrbracket\rho\ =\ &\mathcal{C}\llbracket
+  c_1\rrbracket\rho\ \star\ \lambda\sigma s.\ cases\ s\ in:\\
+  & \qquad normal:\mathcal{C}\llbracket c_2\rrbracket\rho;\\
+  & \qquad stop:<\sigma,\ stop>;\\
+  & \qquad restart:<\sigma,\ restart>;\\
+  & endcases
+\end{align*}
+
+Oltre a queste regole \`e necessario modificare leggermente le altre regole
+di interpretazione dei comandi per dare in output la coppia $<\sigma,\
+normal>$ invece della sola memoria:
+\begin{align*}
+  \mathcal{C}\llbracket e:=e'\rrbracket\rho\ =\ &\mathcal{E}\llbracket
+  e\rrbracket\rho\ \star\ checkLOC\ \star\ \lambda
+  l.\mathcal{R}\llbracket e'\rrbracket\rho\ \star\\
+  &\qquad\qquad\qquad\qquad\lambda
+  v\sigma.<\sigma[v/l],\ normal>
+\end{align*}
+\begin{align*}
+  \mathcal{C}\llbracket\mathbf{while}\ e\ \mathbf{do}\ c\rrbracket\rho\
+  =\ &fix(\lambda\Theta.\mathcal{R}\llbracket e\rrbracket\rho\ \star\
+  checkBOOL\\
+  &\qquad\qquad\star\ \lambda b.b\rightarrow\mathcal{C}\llbracket
+  c\rrbracket\rho\ \star\ \Theta,\ \lambda\sigma.<\sigma,\ normal>)
+\end{align*}
+\begin{align*}
+  \mathcal{C}\llbracket\mathbf{output}\ e\rrbracket\rho\ =\ 
+  &\mathcal{R}\llbracket e\rrbracket\rho\ \star\ \lambda
+  b\sigma.<\sigma[b::\sigma(lout)/lout],\ normal>
+\end{align*}
+Non \`e invece necessario modificare le regole per l'$\mathbf{if}$ e
+per l'applicazione di procedure, in quanto la coppia viene generata a
+livello superiore.
+
+Infine \`e necessario specificare le regole di interpretazione
+semantica per i due nuovi comandi $\mathbf{stop}$ e
+$\mathbf{restart}$:
+\begin{align*}
+  \mathcal{C}\llbracket\mathbf{stop}\rrbracket\rho\ =\
+  \lambda\sigma.<\sigma,\ stop>
+\end{align*}
+\begin{align*}
+  \mathcal{C}\llbracket\mathbf{restart}\rrbracket\rho\ =\
+  \lambda\sigma.<\sigma,\ restart>
+\end{align*}
+
+%\sectionline
 \section*{11.10}
 
 \section*{12.1}
