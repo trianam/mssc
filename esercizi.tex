@@ -21,6 +21,7 @@
 %\usepackage{ornament}
 \usepackage{tikz}
 \usepackage[fleqn]{amsmath}
+\usepackage{mathpartir}
 
 \newcommand{\betaReduction}{\ensuremath{\longrightarrow_{\beta}}}
 \newcommand{\betaReductionS}{\ensuremath{\Longrightarrow_{\beta}}}
@@ -53,6 +54,89 @@
 \section*{3.15}
 
 \section*{4.11}
+\paragraph{Esercizio:}
+Relativamente all’Esempio~4.10, si dimostri che se $s$ \`e una traccia
+di $F$ (ossia $F\Rightarrow 1$) allora $s$
+è una traccia anche di $E$.
+
+\paragraph{Soluzione:}
+\`E necessario dimostrare che se $F\xRightarrow{s} 1$ allora
+$E\xRightarrow{s}1$.
+La dimostrazione procede per induzione sulla lunghezza della traccia
+$s$.
+\paragraph{Caso base $|s|=0$} se la traccia \`e di lunghezza zero,
+allora essa \`e necessariamente $s=\varepsilon$, e quindi la tesi \`e
+dimostrata perch\'e vale $E\xRightarrow{s}$ per l'assioma $(Star_1)$.
+\paragraph{Caso base $|s|=1$} se la traccia \`e di lunghezza uno,
+allora essa pu\`o essere $s=a$ o $s=b$, senza perdita di generalit\`a
+si assume il primo caso.
+
+...
+
+\paragraph{Passo induttivo $|s|>0$} si ha che la traccia pu\`o essere
+$s=as'$ oppure $s=bs'$, e senza perdere di generalit\`a si assume il
+primo caso. Inoltre vale l'ipotesi induttiva che se
+$F\xRightarrow{s'}1$ allora $E\xRightarrow{s'}1$.
+
+Vale che 
+$$
+F\ \xrightarrow{a}\ 1;a^*;F\ \xrightarrow{\varepsilon}\ a;F\
+\xrightarrow{\varepsilon}\ F\ \xrightarrow{\varepsilon}\ 1;F\
+\xrightarrow{\varepsilon}\ F\ \xrightarrow{\varepsilon}\ 1
+$$
+o in altri termini valgono:
+\begin{eqnarray*}
+  F\ \xRightarrow{a}&1;a^*;F&\xRightarrow{\varepsilon}\ F\\
+  F\ \xRightarrow{a}&a;F&\xRightarrow{\varepsilon}\ F\\
+  F\ \xRightarrow{a}&F&\xRightarrow{\varepsilon}\ F\\
+  F\ \xRightarrow{a}&1;F&\xRightarrow{\varepsilon}\ F\\
+  F\ \xRightarrow{a}&1
+\end{eqnarray*}
+Che sono anche le uniche transizioni che $F$ pu\`o eseguire tramite
+$a$, giustificate dalle:
+
+...
+
+Per ipotesi: $F \xRightarrow{as'}\ 1$, e per quanto detto prima,
+dopo aver fatto una $\xRightarrow{a}$ si ha che vale $X\
+\xRightarrow{s'}\ 1$ con $X$ che pu\`o essere uno dei:
+\begin{align*}
+  &1;a^*;F\\
+  &a;F\\
+  &F\\
+  &1;F\\
+  &1  
+\end{align*}
+Nell'ultimo caso si ha che necessariamente $s'=\varepsilon$ e quindi si
+riconduce al caso base perch\'e $s$ \`e di lunghezza 1. In tutti gli
+altri casi si ha che $X\ \xRightarrow{\varepsilon}\ F$ \`e l'unica
+computazione possibile, quindi $F\
+\xRightarrow{s'}\ 1$ e usando l'ipotesi induttiva vale che $E\
+\xRightarrow{s'}\ 1$. La tesi si ottiene giustificando che esiste $E\
+\xRightarrow{a}\ E$ e quindi $E\ \xRightarrow{as'=s}\ 1$. Si
+giustificano i passi $E\ \xrightarrow{a}\ 1;E\
+\xrightarrow{\varepsilon}\ E$ con:
+\begin{align*}
+  &\inferrule* [right=$(Star_2)$]{
+    \inferrule*[right=$(Sum_1)$]{
+      \inferrule*[right=(Atom)]{ }{
+        a\ \xrightarrow{a}\ 1
+      }
+    }{
+      a+b\ \xrightarrow{a}\ 1
+    }
+  }{
+    (a+b)^*\ \xrightarrow{a}\ 1;(a+b)^*
+  }\\
+  \\
+  &\inferrule* [right=$(Seq_2)$] {
+    \inferrule* [right=$(Tic)$] { }{
+      1\ \xrightarrow{\varepsilon}\ 1
+    }
+  }{
+    1;(a+b)^*\ \xrightarrow{\varepsilon}\ (a+b)^*
+  }
+\end{align*}
 
 \section*{5.5}
 \paragraph{Esercizio:}
