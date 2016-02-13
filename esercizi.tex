@@ -14,11 +14,12 @@
 \usepackage[fleqn]{mathtools}
 \usepackage{amsfonts}
 \usepackage{amsthm}
+\usepackage{amssymb}
 \usepackage{xcolor}
 %\usepackage[hidelinks,breaklinks=true]{hyperref}
 \usepackage{listings}
 \usepackage{stmaryrd}
-%\usepackage{ornament}
+\usepackage{pgfornament}
 \usepackage{tikz}
 \usepackage[fleqn]{amsmath}
 \usepackage{mathpartir}
@@ -26,17 +27,17 @@
 \newcommand{\betaReduction}{\ensuremath{\longrightarrow_{\beta}}}
 \newcommand{\betaReductionS}{\ensuremath{\Longrightarrow_{\beta}}}
 
-% \newcommand{\sectionline}{
-%   \begin{center}
-%     \resizebox{0.5\linewidth}{1ex}{
-%       \begin{tikzpicture}
-%         \node  (C) at (0,0) {};
-%         \node (D) at (9,0) {};
-%         \path (C) to [ornament=83] (D);
-%       \end{tikzpicture}
-%     }
-%   \end{center}
-% }
+\newcommand{\sectionline}{
+  \begin{center}
+    \resizebox{0.5\linewidth}{5ex}{
+      \begin{tikzpicture}
+        \node  (C) at (0,0) {};
+        \node (D) at (10,0) {};
+        \path (C) to [ornament=84] (D);
+      \end{tikzpicture}
+    }
+  \end{center}
+}
 
 \author{
   {\Large Stefano Martina}\\
@@ -50,16 +51,110 @@
 
 \begin{document}
 \maketitle
+\tableofcontents
+\newpage
 
-\section*{3.15}
+\section*{Esercizio 3.15}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 3.15}
+\subsection*{Testo:}
+Dimostrare che, per ogni espressione aritmetica $E$ descritta nella
+Sezione 3.3,
+$$
+E\ \rightarrow\ E_1,\ E\ \rightarrow\ E_2\quad \text{implica}\quad E_1\
+\twoheadrightarrow\ n,\ E_2\ \twoheadrightarrow\ n
+$$
 
-\section*{4.11}
-\paragraph{Esercizio:}
+\subsection*{Soluzione:}
+\paragraph{Premessa:}Si noti che se vale la tesi, allora vale anche che $E\
+\twoheadrightarrow\ n$, infatti per l'equivalenza tra semantica di
+computazione e semantica di valutazione:
+\begin{align*}
+  &E\ \rightarrow\ E_1\ \twoheadrightarrow\ n\\
+  &E\ \rightarrow\ E_1\ \xrightarrow{*}\ n\\
+  &E\ \xrightarrow{*}\ n\\
+  &E\ \twoheadrightarrow\ n
+\end{align*}
+Oppure in modo analogo passando da $E_2$.
+
+La dimostrazione procede per induzione sulla lunghezza dell'espressione $E$, o in modo
+equivalente sul numero di operatori in $E$.
+
+\paragraph{Caso base:}Per il caso base si considera un'espressione $E$ con un operatore (non possono esserci zero
+operatori altrimenti non si potrebbe applicare l'ipotesi), l'unica regola
+applicabile è la $(op)$ della semantica di computazione, e quindi se
+$E\ \rightarrow\ E_1$ e $E\ \rightarrow\ E_2$ allora
+$E_1=E_2=n$ e vale la tesi.
+
+\paragraph{Passo induttivo:}Per una generica espressione $E$ tale che
+$E\ \rightarrow\ E_1$ e $E\ \rightarrow\ E_2$, si pu\`o osservare che se
+\`e stata usata $(op)$ nel passo $E\ \rightarrow\ E_1$ significa che
+$E = m_1\ op\ m_2$ e quindi ha un solo operatore e siamo nel caso base.
+
+Se \`e stata usata $(redl)$ nel passo $E\ \rightarrow\ E_1$ significa che
+$E$ non \`e in una forma in cui \`e possibile applicare $(op)$ quindi
+nel passo $E\ \rightarrow\ E_2$ \`e possibile solo applicare $(redl)$
+o $(redr)$. Nel Primo caso significa che $E_1=E_2$ e non \`e
+rilevante per la dimostrazione, quindi assumiamo che sia stata usata
+$(redr)$. Chiamando $E\equiv E_a\ op\ E_b$, $E_1\equiv E_a'\ op\ E_b$,
+$E_2\equiv E_a\ op\ E_b'$ si hanno:
+\begin{align*}
+  &\inferrule* [right=$(redl)$] {
+    E_a\ \rightarrow\ E_a'
+  }{
+    E_a\ op\ E_b\ \rightarrow\ E_a'\ op\ E_b
+  }\\
+  \\
+  &\inferrule* [right=$(redr)$] {
+    E_b\ \rightarrow\ E_b'
+  }{
+    E_a\ op\ E_b\ \rightarrow\ E_a\ op\ E_b'
+  }
+\end{align*}
+Si noti che \`e stato possibile escludere che $E_1=k_1$ o $E_2=k_2$ in
+quanto in questi casi si esclude che sia possibile applicare $(redl)$
+e $(redr)$ contemporaneamente e si riduce ad un caso banale.
+
+$E_a$ e $E_b$ sono pi\`u corte di $E$ quindi si pu\`o applicare l'ipotesi
+induttiva, in modo che per qualunque coppia di cammini intrapresi
+$E_a\ \rightarrow\ E_{a1}$, $E_a\ \rightarrow\ E_{a2}$,
+$E_b\ \rightarrow\ E_{b1}$, $E_b\ \rightarrow\ E_{b2}$, si ha che
+$E_{a1}\ \twoheadrightarrow\ m_a$, $E_{a2}\ \twoheadrightarrow\ m_a$,
+$E_{b1}\ \twoheadrightarrow\ m_b$, $E_{b2}\ \twoheadrightarrow\
+m_b$ e, per quanto detto nella premessa,
+anche $E_a\ \twoheadrightarrow\ m_a$ e $E_b\ \twoheadrightarrow\
+m_b$. Di conseguenza valgono:
+\begin{align*}
+  &E_a\ \twoheadrightarrow\ m_a\\
+  &E_b\ \twoheadrightarrow\ m_b\\
+  &E_a'\ \twoheadrightarrow\ m_a\\
+  &E_b'\ \twoheadrightarrow\ m_b\\
+\end{align*}
+e si pu\`o applicare:
+\begin{align*}
+  &\inferrule* [right={$(m_a\ op\ m_b\ =\ n)$}] {
+    E_a'\ \twoheadrightarrow\ m_a\qquad E_b\ \twoheadrightarrow\ m_b
+  }{
+    E_a'\ op\ E_b\ \twoheadrightarrow\ n
+  }\\
+  \\
+  &\inferrule* [right={$(m_a\ op\ m_b\ =\ n)$}] {
+    E_a\ \twoheadrightarrow\ m_a\qquad E_b'\ \twoheadrightarrow\ m_b
+  }{
+    E_a\ op\ E_b'\ \twoheadrightarrow\ n
+  }
+\end{align*}
+Dimostrando che $E_1\ \twoheadrightarrow\ n$ e $E_2\
+\twoheadrightarrow\ n$, e quindi la tesi.
+
+\sectionline
+\section*{Esercizio 4.11}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 4.11}
+\subsection*{Testo:}
 Relativamente all’Esempio~4.10, si dimostri che se $s$ \`e una traccia
 di $F$ (ossia $F\Rightarrow 1$) allora $s$
 è una traccia anche di $E$.
 
-\paragraph{Soluzione:}
+\subsection*{Soluzione:}
 \`E necessario dimostrare che se $F\xRightarrow{s} 1$ allora
 $E\xRightarrow{s}1$.
 La dimostrazione procede per induzione sulla lunghezza della traccia
@@ -197,8 +292,10 @@ computazione possibile, quindi $F\ \xRightarrow{a}\ X\ \xRightarrow{\varepsilon}
 ci\`o si noti che esistono i passi $E\ \xrightarrow{a}\ 1;E\
 \xrightarrow{\varepsilon}\ E$ gi\`a giustificati con regole viste prima.
 
-\section*{5.5}
-\paragraph{Esercizio:}
+\sectionline
+\section*{Esercizio 5.5}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 5.5}
+\subsection*{Testo:}
 Dati:
 \begin{eqnarray*}
   \mathbf{S}&\equiv&\lambda xyz.xz(yz)\\
@@ -206,7 +303,7 @@ Dati:
   \mathbf{I}&\equiv&\lambda x.x
 \end{eqnarray*}
 mostrare che $\mathbf{SK}=\mathbf{KI}$.
-\paragraph{Soluzione:}
+\subsection*{Soluzione:}
 Valgono i passaggi:
 \begin{eqnarray*}
   \mathbf{SK}&=&(\lambda xyz.xz(yz))(\lambda xy.x)\\
@@ -224,13 +321,16 @@ e anche:
 \end{eqnarray*}
 quindi la tesi \`e dimostrata perch\`e i due termini riducono alla
 stessa forma. 
-\section*{6.10}
-\paragraph{Esercizio:}
+
+\sectionline
+\section*{Esercizio 6.10}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 6.10}
+\subsection*{Testo:}
 Sia $D$ un cpo. Una funzione $r : D \rightarrow D$ si dice idempotente
 se $r(r(x)) = r(x)$, per ogni $x \in D$.
 Dimostrare che l’insieme di tutte le funzioni continue idempotenti da
 $D$ in $D$ è un cpo.
-\paragraph{Soluzione:}
+\subsection*{Soluzione:}
 Poich\'e $D$ \`e un cpo, lo spazio delle funzioni continue da $D$ a
 $D$ denotato da $[D\rightarrow D] = (D\rightarrow D, \sqsubseteq)$,
 cos\`i come in definizione 6.33, \`e un cpo. L'insieme delle funzioni
@@ -277,14 +377,16 @@ catena in $\mathbb{G}$ (punto 2).
   \qed
 \end{enumerate}
 
-\section*{7.6}
-\paragraph{Esercizio:}
+\sectionline
+\section*{Esercizio 7.6}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 7.6}
+\subsection*{Testo:}
 Fornire semantica operazionale e denotazionale del programma
 $$
 \mathbf{letrec} f(x) \Leftarrow f(x) \mathbf{in} f(5)  
 $$
 
-\paragraph{Soluzione:}
+\subsection*{Soluzione:}
 Cominciando con la semantica operazionale con chiamata per nome si ha:
 $$
 f(5) \xrightarrow{(FUN)}_D f(5) \xrightarrow{(FUN)}_D \dots
@@ -318,14 +420,17 @@ Dalla valutazione della semantica operazionale si nota che il
 programma diverge, e infatti
 la valutazione della semantica denotazionale lo conferma restituendo, come
 prevedibile, un risultato non definito.
-\section*{8.11}
-\paragraph{Esercizio:} Si aggiunga al linguaggio TINY un comando $\mathbf{stop}$
+
+\sectionline
+\section*{Esercizio 8.11}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 8.11}
+\subsection*{Testo:} Si aggiunga al linguaggio TINY un comando $\mathbf{stop}$
 con la semantica informale di far terminare il 
 programma. Se ne dia la semantica e si dimostri che $c 1 ; \mathbf{stop}$ e $c 1 ;
 \mathbf{stop}; c 2$ sono semanticamente
 equivalenti.
 
-\paragraph{Soluzione:}
+\subsection*{Soluzione:}
 \`E possibile estendere la semantica operazionale in modo da gestire
 lo $\mathbf{stop}$ modificando leggermente $(\text{Seq}_2)$ in:
 $$
@@ -422,14 +527,15 @@ c'è un ulteriore passaggio in cui viene usato il secondo \emph{case}
 della denotazione della sequenzializzazione e che per\`o non cambia il
 risultato.
 
-
-\section*{9.7}
-\paragraph{Esercizio:} Estendere il linguaggio SMALL introducendo i
+\sectionline
+\section*{Esercizio 9.7}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 9.7}
+\subsection*{Testo:} Estendere il linguaggio SMALL introducendo i
 comandi $\mathbf{restart}$ ed $\mathbf{exit}$, il cui significato è di 
 saltare rispettivamente all’inizio ed alla fine del blocco più
 interno.
 
-\paragraph{Soluzione:} Per gestire i due comandi richiesti \`e
+\subsection*{Soluzione:} Per gestire i due comandi richiesti \`e
 necessario modificare il dominio:
 \begin{equation*}
   \begin{multlined}  
@@ -516,12 +622,17 @@ $\mathbf{restart}$:
   \lambda\sigma.<\sigma,\ restart>
 \end{align*}
 
-%\sectionline
-\section*{11.10}
+\sectionline
+\section*{Esercizio 11.10}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 11.10}
 
-\section*{12.1}
+\sectionline
+\section*{Esercizio 12.1}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 12.1}
 
-\section*{12.2}
+\sectionline
+\section*{Esercizio 12.2}
+\addcontentsline{toc}{section}{\protect\numberline{}Esercizio 12.2}
  
 \end{document}
 
