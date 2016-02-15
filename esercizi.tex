@@ -23,6 +23,7 @@
 \usepackage{tikz}
 \usepackage[fleqn]{amsmath}
 \usepackage{mathpartir}
+\usepackage{hyperref}
 
 \newcommand{\betaReduction}{\ensuremath{\longrightarrow_{\beta}}}
 \newcommand{\betaReductionS}{\ensuremath{\Longrightarrow_{\beta}}}
@@ -30,11 +31,13 @@
 \newcommand{\sectionline}{
   \begin{center}
     \resizebox{0.5\linewidth}{5ex}{
-      \begin{tikzpicture}
-        \node  (C) at (0,0) {};
-        \node (D) at (10,0) {};
-        \path (C) to [ornament=84] (D);
-      \end{tikzpicture}
+      \hyperref[toc]{
+        \begin{tikzpicture}
+          \node  (C) at (0,0) {};
+          \node (D) at (10,0) {};
+          \path (C) to [ornament=84] (D);
+        \end{tikzpicture}
+      }
     }
   \end{center}
 }
@@ -52,9 +55,10 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\label{toc}
 \newpage
 
-\section*{Esercizio 3.15}
+\section*{\hyperref[toc]{Esercizio 3.15}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 3.15}
 \subsection*{Testo:}
 Dimostrare che, per ogni espressione aritmetica $E$ descritta nella
@@ -147,7 +151,7 @@ Dimostrando che $E_1\ \twoheadrightarrow\ n$ e $E_2\
 \twoheadrightarrow\ n$, e quindi la tesi.
 
 \sectionline
-\section*{Esercizio 4.11}
+\section*{\hyperref[toc]{Esercizio 4.11}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 4.11}
 \subsection*{Testo:}
 Relativamente all’Esempio~4.10, si dimostri che se $s$ \`e una traccia
@@ -293,7 +297,7 @@ ci\`o si noti che esistono i passi $E\ \xrightarrow{a}\ 1;E\
 \xrightarrow{\varepsilon}\ E$ gi\`a giustificati con regole viste prima.
 
 \sectionline
-\section*{Esercizio 5.5}
+\section*{\hyperref[toc]{Esercizio 5.5}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 5.5}
 \subsection*{Testo:}
 Dati:
@@ -323,7 +327,7 @@ quindi la tesi \`e dimostrata perch\`e i due termini riducono alla
 stessa forma. 
 
 \sectionline
-\section*{Esercizio 6.10}
+\section*{\hyperref[toc]{Esercizio 6.10}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 6.10}
 \subsection*{Testo:}
 Sia $D$ un cpo. Una funzione $r : D \rightarrow D$ si dice idempotente
@@ -378,7 +382,7 @@ catena in $\mathbb{G}$ (punto 2).
 \end{enumerate}
 
 \sectionline
-\section*{Esercizio 7.6}
+\section*{\hyperref[toc]{Esercizio 7.6}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 7.6}
 \subsection*{Testo:}
 Fornire semantica operazionale e denotazionale del programma
@@ -422,7 +426,7 @@ la valutazione della semantica denotazionale lo conferma restituendo, come
 prevedibile, un risultato non definito.
 
 \sectionline
-\section*{Esercizio 8.11}
+\section*{\hyperref[toc]{Esercizio 8.11}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 8.11}
 \subsection*{Testo:} Si aggiunga al linguaggio TINY un comando $\mathbf{stop}$
 con la semantica informale di far terminare il 
@@ -528,7 +532,7 @@ della denotazione della sequenzializzazione e che per\`o non cambia il
 risultato.
 
 \sectionline
-\section*{Esercizio 9.7}
+\section*{\hyperref[toc]{Esercizio 9.7}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 9.7}
 \subsection*{Testo:} Estendere il linguaggio SMALL introducendo i
 comandi $\mathbf{restart}$ ed $\mathbf{exit}$, il cui significato è di 
@@ -623,16 +627,105 @@ $\mathbf{restart}$:
 \end{align*}
 
 \sectionline
-\section*{Esercizio 11.10}
+\section*{\hyperref[toc]{Esercizio 11.10}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 11.10}
+\subsection*{Testo:}
+Si dimostri la Proposizione 11.34 che fornisce una definizione
+alternativa di bisimulazione.
+
+{\tiny
+(Sia $<Q, A, \rightarrow >$ un LTS. Una relazione $R \subseteq Q \times Q$ è una bisimulazione se e solo se $R$ e $R^{-1}$
+sono simulazioni.)
+}
+\subsection*{Soluzione:}
+\paragraph{($\implies$)} Si dimostra che se $R$ \`e una
+bisimulazione, allora $R$ e $R^{-1}$ sono simulazioni.
+
+Per il punto~1 della
+definizione~11.8 si ha che 
+\begin{align*}
+&\forall <p,q>\in R,\text{ vale:}\\
+&\quad\forall a\in A,\ \forall p'\in Q:\\
+&\quad\quad(p\xrightarrow{a} p')\implies\exists q'\in Q:(q\xrightarrow{a} q'\
+\land\ <p',q'>\in R),
+\end{align*}
+ma se vale questo vale anche che $R$ \`e
+una simulazione per la definizione~11.31.
+
+Per il punto~2 della definizione~11.8 si ha che
+\begin{align*}
+&\forall <p,q>\in R,\text{ vale:}\\
+&\quad\forall a\in A,\ \forall q'\in Q:\\
+&\quad\quad(q\xrightarrow{a} q')\implies\exists p'\in Q:(p\xrightarrow{a} p'\
+\land\ <p',q'>\in R),
+\end{align*}
+per la definizione di relazione inversa si ha
+$<q,p>\in R^{-1}\iff<p,q>\in R$, quindi
+\begin{align*}
+&\forall <q,p>\in R^{-1},\text{ vale:}\\
+&\quad\forall a\in A,\ \forall q'\in Q:\\
+&\quad\quad(q\xrightarrow{a} q')\implies\exists p'\in Q:(p\xrightarrow{a} p'\
+\land\ <q',p'>\in R^{-1}).
+\end{align*}
+Ridenominando $p$ in $q$, $p'$ in $q'$, $q$ in $p$ e $q'$ in $p'$,
+tutte quantificate, si ottiene che $R^{-1}$ \`e una simulazione 
+dalla definizione~11.31.
+
+\paragraph{($\impliedby$)} Si dimostra che se $R$ e $R^{-1}$ sono
+simulazioni, allora $R$ \`e una bisimulazione.
+
+Applicando la definizione~11.31 ad $R$ ed $R^{-1}$, ridenominando
+nella seconda $p$
+in $q$, $p'$ in $q'$, $q$ in $p$ e $q'$ in $p'$ si ha
+\begin{align*}
+&\forall <p,q>\in R,\text{ vale:}\\
+&\quad\forall a\in A,\ \forall p'\in Q:\\
+&\quad\quad(p\xrightarrow{a} p')\implies\exists q'\in Q:(q\xrightarrow{a} q'\
+\land\ <p',q'>\in R),
+\\
+&\forall <q,p>\in R^{-1},\text{ vale:}\\
+&\quad\forall a\in A,\ \forall q'\in Q:\\
+&\quad\quad(q\xrightarrow{a} q')\implies\exists p'\in Q:(p\xrightarrow{a} p'\
+\land\ <q',p'>\in R^{-1}),
+\end{align*}
+per la definizione di relazione inversa si ha
+$<q,p>\in R^{-1}\iff<p,q>\in R$, quindi
+\begin{align*}
+&\forall <p,q>\in R,\text{ vale:}\\
+&\quad\forall a\in A,\ \forall p'\in Q:\\
+&\quad\quad(p\xrightarrow{a} p')\implies\exists q'\in Q:(q\xrightarrow{a} q'\
+\land\ <p',q'>\in R),
+\\
+&\forall <p,q>\in R,\text{ vale:}\\
+&\quad\forall a\in A,\ \forall q'\in Q:\\
+&\quad\quad(q\xrightarrow{a} q')\implies\exists p'\in Q:(p\xrightarrow{a} p'\
+\land\ <p',q'>\in R),
+\end{align*}
+o in modo alternativo
+\begin{align*}
+&\forall <p,q>\in R,\text{ valgono:}\\
+&\quad\forall a\in A,\ \forall p'\in Q:\\
+&\quad\quad(p\xrightarrow{a} p')\implies\exists q'\in Q:(q\xrightarrow{a} q'\
+\land\ <p',q'>\in R),
+\\
+&\quad\forall a\in A,\ \forall q'\in Q:\\
+&\quad\quad(q\xrightarrow{a} q')\implies\exists p'\in Q:(p\xrightarrow{a} p'\
+\land\ <p',q'>\in R),
+\end{align*}
+e, per la definizione~11.8, $R$ \`e una bisimulazione.
 
 \sectionline
-\section*{Esercizio 12.1}
+\section*{\hyperref[toc]{Esercizio 12.1}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 12.1}
+\subsection*{Testo:}
+\subsection*{Soluzione:}
 
 \sectionline
-\section*{Esercizio 12.2}
+\section*{\hyperref[toc]{Esercizio 12.2}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 12.2}
+\subsection*{Testo:}
+\subsection*{Soluzione:}
  
+\sectionline
 \end{document}
 
