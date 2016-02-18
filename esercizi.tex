@@ -638,6 +638,9 @@ alternativa di bisimulazione.
 sono simulazioni.)
 }
 \subsection*{Soluzione:}
+Si dimostrano i due lati della doppia implicazione. Nel testo di
+questo esercizio ``$\implies$'' \`e da intendersi come ``\emph{implica}'', e
+non come sinonimo di ``$\xRightarrow{\varepsilon}$''.
 \paragraph{($\implies$)} Si dimostra che se $R$ \`e una
 bisimulazione, allora $R$ e $R^{-1}$ sono simulazioni.
 
@@ -718,13 +721,46 @@ e, per la definizione~11.8, $R$ \`e una bisimulazione.
 \section*{\hyperref[toc]{Esercizio 12.1}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 12.1}
 \subsection*{Testo:}
+Dimostrare la proposizione seguente che introduce alcune leggi per gli
+operatori statici derivabili 
+a partire da quelle nelle Tabelle~12.7, 12.8 e~12.9.
+\paragraph{Proposizione~12.64 (Leggi derivabili).} Le seguenti leggi
+\begin{enumerate}
+\item $p|q\ \sim\ q|p$
+\item $p|(q|r)\ \sim\ (p|q)|r$
+\item $p|nil\ \sim\ p$
+\item $p \setminus L \ \sim\  p\text{ se }\mathcal{L}(p) \cap (L \cup \overline{L}) = \emptyset$
+\item $p \setminus K \setminus L \ \sim\  p \setminus (K \cup L)$
+\item $p[f] \setminus L \ \sim\  p \setminus f^{-1} (L)[f]$
+\item $(p|q) \setminus L \ \sim\  p \setminus L|q \setminus L\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset$
+\item $p[Id] \ \sim\  p$
+\item $p[f] \ \sim\  p[f']\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)$
+\item $p[f][f'] \ \sim\  p[f \circ f']$
+\item $(p|q)[f] \ \sim\  p[f]|q[f]\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$
+\end{enumerate}
+sono corrette rispetto a $\sim$.
 \subsection*{Soluzione:}
 
 \sectionline
 \section*{\hyperref[toc]{Esercizio 12.2}}
 \addcontentsline{toc}{section}{\protect\numberline{}Esercizio 12.2}
 \subsection*{Testo:}
+Mostrare che la legge seguente
+$$
+(\tau 4)\qquad p + \tau.(p + q) = \tau.(p + q)
+$$
+è derivabile dall’insieme $E_4$ definito in Tabella~12.9.
+
 \subsection*{Soluzione:}
+Si ha che:
+\begin{align*}
+  p + \tau.(p + q) &= p+((p+q)+\tau.(p+q)) & \text{ da } (\tau 2)\\
+  &= (p+(p+q))+\tau.(p+q) & \text{ da } (A2)\\
+  &= ((p+p)+q)+\tau.(p+q) & \text{ da } (A2)\\
+  &= (p+q)+\tau.(p+q) & \text{ da } (A4)\\
+  &= \tau.(p+q) & \text{ da } (\tau 2)
+\end{align*}
+quindi vale che $E_4\vdash p + \tau.(p + q) = \tau.(p + q)$.
  
 \sectionline
 \end{document}
