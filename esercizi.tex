@@ -411,6 +411,7 @@ Per la semantica denotazionale, usando un approccio bottom up, si ha:
   f.\mathcal{T}[[f(x)]]f)\\
   &=&fix(\lambda f.(\lambda f'.\lambda x.f'(x))f)\\
   &=&fix(\lambda f.\lambda x. f(x))\\
+  &=&\sup\{(\lambda f.\lambda x. f(x))^i\lambda x.\perp|i\in\mathbb{N}\}\\
   &=&\lambda x.\perp\\
   &=&\Omega\\
   \mathcal{P}[[\mathbf{letrec} f(x) \Leftarrow f(x) \mathbf{in} f(5)
