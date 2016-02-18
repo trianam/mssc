@@ -724,23 +724,53 @@ e, per la definizione~11.8, $R$ \`e una bisimulazione.
 \subsection*{Testo:}
 Dimostrare la proposizione seguente che introduce alcune leggi per gli
 operatori statici derivabili 
-a partire da quelle nelle Tabelle~12.7, 12.8 e~12.9.
+a partire da quelle nelle Tabelle~12.6, 12.7 e~12.8.
 \paragraph{Proposizione~12.64 (Leggi derivabili).} Le seguenti leggi
 \begin{enumerate}
-\item $p|q\ \sim\ q|p$
-\item $p|(q|r)\ \sim\ (p|q)|r$
-\item $p|nil\ \sim\ p$
-\item $p \setminus L \ \sim\  p\quad\text{ se }\mathcal{L}(p) \cap (L \cup \overline{L}) = \emptyset$
-\item $p \setminus K \setminus L \ \sim\  p \setminus (K \cup L)$
-\item $p[f] \setminus L \ \sim\  p \setminus f^{-1} (L)[f]$
-\item $(p|q) \setminus L \ \sim\  p \setminus L|q \setminus L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset$
-\item $p[Id] \ \sim\  p$
-\item $p[f] \ \sim\  p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)$
-\item $p[f][f'] \ \sim\  p[f \circ f']$
-\item $(p|q)[f] \ \sim\  p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$
+\item $p|q\ =\ q|p$
+\item $p|(q|r)\ =\ (p|q)|r$
+\item $p|nil\ =\ p$
+\item $p \setminus L \ =\  p\quad\text{ se }\mathcal{L}(p) \cap (L \cup \overline{L}) = \emptyset$
+\item $p \setminus K \setminus L \ =\  p \setminus (K \cup L)$
+\item $p[f] \setminus L \ =\  p \setminus f^{-1} (L)[f]$
+\item $(p|q) \setminus L \ =\  p \setminus L|q \setminus L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset$
+\item $p[Id] \ =\  p$
+\item $p[f] \ =\  p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)$
+\item $p[f][f'] \ =\  p[f \circ f']$
+\item $(p|q)[f] \ =\  p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$
 \end{enumerate}
 sono corrette rispetto a $\sim$.
 \subsection*{Soluzione:}
+Per ognuna delle regole $t_1\ =\ t_2$ \`e necessario verificare che esiste una
+bisimulazione forte $R$ tale che $<t_1,t_2>\in R$. La struttura della
+dimostrazione \`e simile per tutti i punti, si definisce
+$$
+R\triangleq\{<t_1,t_2>:t_1,t_2\in\mathcal{P}_{CCS}\}\cup Id
+$$
+e si procede quindi a dimostrare che $R$ \`e chiusa rispetto alle
+transizioni, alternativamente che $\forall\mu\in\mathcal{A}_{CCS}:\ t_1\xrightarrow{\mu}t\iff t_2\xrightarrow{\mu}t$. 
+\begin{enumerate}
+\item Se $p|q\xrightarrow{\mu}t$ significa che è stata usata una tra
+  $(PAR1)$, $(PAR2)$ e $(PAR3)$, quindi si ha che
+  \begin{itemize}
+  \item $p\xrightarrow{\mu}p'$ oppure
+  \item $q\xrightarrow{\mu}q'$ oppure
+  \item se $\mu = \tau$: $p\xrightarrow{\alpha}p'$ e
+    $q\xrightarrow{\overline{\alpha}}q'$ per qualche $\alpha$.
+  \end{itemize}
+  Quindi per le stesse regole vale che $q|p\xrightarrow{\mu}t$ con
+  stessi $\mu$ e $t$.
+\item 
+\item
+\item
+\item
+\item
+\item
+\item
+\item
+\item
+\item 
+\end{enumerate}
 
 \sectionline
 \section*{\hyperref[toc]{Esercizio 12.2}}
