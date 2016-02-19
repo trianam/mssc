@@ -46,6 +46,10 @@
   \tikz[baseline=(X.base)] 
     \node (X) [draw, shape=circle, inner sep=0] {\strut #1};}
 
+\newcommand\enbox[1]{%
+  \tikz[baseline=(X.base)] 
+    \node (X) [draw, shape=rectangle, inner ysep=.2ex, inner xsep=.5em] {\strut #1};}
+
 \author{
   {\Large Stefano Martina}\\
   {\small stefano.martina@stud.unifi.it}\\
@@ -756,7 +760,7 @@ transizioni. Alternativamente \`e possibile dimostrare che
 $\forall\mu\in\mathcal{A}_{CCS}:\ t_1\xrightarrow{\mu}t\iff
 t_2\xrightarrow{\mu}t$. 
 \begin{enumerate}
-\item $[p|q=q|p]$: Se $p|q\xrightarrow{\mu}t$ significa che è stata usata una tra
+\item \enbox{$p|q=q|p$}: Se $p|q\xrightarrow{\mu}t$ significa che è stata usata una tra
   $(PAR1)$, $(PAR2)$ e $(PAR3)$, quindi si ha che
   \begin{itemize}
   \item $p\xrightarrow{\mu}p'$ e quindi $t=p'|q$ oppure
@@ -773,7 +777,7 @@ t_2\xrightarrow{\mu}t$.
   \end{itemize}
  La tesi viene dal fatto che qualunque percorso viene scelto
  $t$ e $t'$ rimangono in forma $p|q$ e $q|p$ e quindi $<t,\ t'>\in R$.
-\item $[p|(q|r)=(p|q)|r]$: La dimostrazione avviene mostrando che
+\item \enbox{$p|(q|r)=(p|q)|r$}: La dimostrazione avviene mostrando che
   $R$ \`e chiusa rispetto alle transizioni.
 
   In maniera schematica è
@@ -836,12 +840,12 @@ t_2\xrightarrow{\mu}t$.
   $(PQ_1)$-$(PQ_2)$ e
   $(PR_1)$-$(PR_2)$ vale che $R$ \`e chiusa per le
   transizioni.
-\item $[p|nil=p]$: Si dimostra con il fatto che $R$ \`e chiusa per
+\item \enbox{$p|nil=p$}: Si dimostra con il fatto che $R$ \`e chiusa per
   transizioni. L'unica regola della semantica applicabile a $p|nil$ è
   $(PAR1)$ quindi $p|nil\xrightarrow{\mu}p'|nil$ e
   $p\xrightarrow{\mu}p'$ e $<p'|nil,\ p'>\in R$.
-\item $[p \backslash L = p\quad\text{ se }\mathcal{L}(p) \cap (L \cup
-  \overline{L}) = \emptyset]$: Se $p\xrightarrow{\mu}p'$ allora per la
+\item \enbox{$p \backslash L = p\quad\text{ se }\mathcal{L}(p) \cap (L \cup
+  \overline{L}) = \emptyset$}: Se $p\xrightarrow{\mu}p'$ allora per la
   regola $(RES)$ della semantica $p\backslash
   L\xrightarrow{\mu}p'\backslash L$ solo se $\mu,\overline{\mu}\not\in
   L$ equivalentemente se $\mu\not\in(L\cup\overline{L})$. Applicando
@@ -853,7 +857,7 @@ t_2\xrightarrow{\mu}t$.
   definizione di sorta se
   $\mathcal{L}(p)\cap(L\cup\overline{L})=\emptyset$ allora
   $\mathcal{L}(p')\cap(L\cup\overline{L})=\emptyset$.
-\item $[p \backslash K \backslash L = p \backslash (K \cup L)]$: Se
+\item \enbox{$p \backslash K \backslash L = p \backslash (K \cup L)$}: Se
   $p\backslash K\backslash L\xrightarrow{\mu}p'$ l'unica regola della
   semantica applicabile \`e $(RES)$ nel seguente modo:
   \begin{equation*}
@@ -882,12 +886,48 @@ t_2\xrightarrow{\mu}t$.
   e i $\mu$ per cui valgono sono gli stessi, inoltre $R$ \`e chiuso
   per le transizioni perch\'e $<p'\backslash K\backslash L,\
   p'\backslash(K\cup L)>\in R$.
-\item $[p[f] \backslash L = p \backslash f^{-1} (L)[f]]$:
-\item $[(p|q) \backslash L = p \backslash L|q \backslash L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset]$:
-\item $[p[Id] = p]$:
-\item $[p[f] = p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)]$:
-\item $[p[f][f'] = p[f \circ f']]$:
-\item $[(p|q)[f] = p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)]$:
+\item \enbox{$p[f] \backslash L = p \backslash f^{-1} (L)[f]$}: Sul
+  membro sinistro \`e possibile applicare solo:
+  \begin{equation*}
+    \inferrule*[right={$(\hat f(\mu),\ \overline{\hat f(\mu)}\ \not\in L)$}]{
+      \inferrule*{
+        p\xrightarrow{\mu}p'
+      }{
+        p[f]\xrightarrow{\hat f(\mu)}p'[f]
+      }
+    }{
+      p[f]\backslash L\xrightarrow{\hat f(\mu)}p'[f]\backslash L
+    }
+  \end{equation*}
+  su quello destro solo
+  \begin{equation*}
+    \inferrule*{
+      \inferrule*[right={$(\mu,\ \overline{\mu}\ \not\in f^{-1}(L))$}]{
+        p\xrightarrow{\mu}p'
+      }{
+        p\backslash f^{-1}(L)\xrightarrow{\mu}p'\backslash f^{-1}(L)
+      }
+    }{
+      p\backslash f^{-1}(L)[f]\xrightarrow{\hat f(\mu)}p'\backslash f^{-1}(L)[f]
+    }
+  \end{equation*}
+  Si nota che poich\'e $L\subseteq\Lambda$ e $f:\Lambda\to\Lambda$ e
+  per la definizione di $\hat f$ vale che
+  \begin{align*}
+    (\mu,\ \overline{\mu}\ \not\in f^{-1}(L))&\implies (\hat f(\mu),\ \hat f(\overline{\mu})\ \not\in L)\\
+    &\implies (\hat f(\mu),\ \overline{\hat f(\mu)}\ \not\in L)
+  \end{align*}
+  e quindi le condizioni dei due membri si equivalgono e
+  $p[f]\backslash L\xrightarrow{\hat f(\mu)}p'[f]\backslash L$ se e
+  solo se $p\backslash f^{-1}(L)[f]\xrightarrow{\hat
+    f(\mu)}p'\backslash f^{-1}(L)[f]$. La tesi viene dal fatto che $R$
+  \`e chiusa per transizioni perch\'e $<p'[f]\backslash L,\
+  p'\backslash f^{-1}(L)[f]>\in R$.
+\item \enbox{$(p|q) \backslash L = p \backslash L|q \backslash L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset$}:
+\item \enbox{$p[Id] = p$}:
+\item \enbox{$p[f] = p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)$}:
+\item \enbox{$p[f][f'] = p[f \circ f']$}:
+\item \enbox{$(p|q)[f] = p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$}:
 \end{enumerate}
 
 \sectionline
