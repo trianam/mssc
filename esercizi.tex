@@ -924,7 +924,18 @@ t_2\xrightarrow{\mu}t$.
   \`e chiusa per transizioni perch\'e $<p'[f]\backslash L,\
   p'\backslash f^{-1}(L)[f]>\in R$.
 \item \enbox{$(p|q) \backslash L = p \backslash L|q \backslash L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset$}:
-\item \enbox{$p[Id] = p$}:
+\item \enbox{$p[Id] = p$}: \`E possibile applicare
+  \begin{equation*}
+    \inferrule*{
+      p\xrightarrow{\mu}p'
+    }{
+      p[Id]\xrightarrow{\hat{Id}(\mu)}p'[Id]
+    }
+  \end{equation*}
+  e per la definizione di $\hat f$ e $Id$, si ha che
+  $\hat{Id}(\mu)=Id(\mu)=\mu$ quindi $p[Id]\xrightarrow{\mu}p'[Id]$ se e
+  solo se $p\xrightarrow{\mu}p'$. $R$ \`e chiusa per
+  transizioni perch\'e $<p'[Id],\ p'>\in R$.
 \item \enbox{$p[f] = p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)$}:
 \item \enbox{$p[f][f'] = p[f \circ f']$}:
 \item \enbox{$(p|q)[f] = p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$}:
