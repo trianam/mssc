@@ -756,17 +756,24 @@ transizioni. Alternativamente \`e possibile dimostrare che
 $\forall\mu\in\mathcal{A}_{CCS}:\ t_1\xrightarrow{\mu}t\iff
 t_2\xrightarrow{\mu}t$. 
 \begin{enumerate}
-\item ($p|q=q|p$): Se $p|q\xrightarrow{\mu}t$ significa che è stata usata una tra
+\item $[p|q=q|p]$: Se $p|q\xrightarrow{\mu}t$ significa che è stata usata una tra
   $(PAR1)$, $(PAR2)$ e $(PAR3)$, quindi si ha che
   \begin{itemize}
-  \item $p\xrightarrow{\mu}p'$ oppure
-  \item $q\xrightarrow{\mu}q'$ oppure
-  \item se $\mu = \tau$: $p\xrightarrow{\alpha}p'$ e
-    $q\xrightarrow{\overline{\alpha}}q'$ per qualche $\alpha$.
+  \item $p\xrightarrow{\mu}p'$ e quindi $t=p'|q$ oppure
+  \item $q\xrightarrow{\mu}q'$ e quindi $t=p|q'$ oppure
+  \item se $\mu = \tau$: $p\xrightarrow{\alpha}p''$ e
+    $q\xrightarrow{\overline{\alpha}}q''$ per qualche $\alpha$  e quindi $t=p''|q''$.
   \end{itemize}
-  Quindi per le stesse regole vale che $q|p\xrightarrow{\mu}t$ con
-  stessi $\mu$ e $t$.
-\item ($p|(q|r)=(p|q)|r$): La dimostrazione avviene mostrando che
+  Quindi per le stesse regole vale che $q|p\xrightarrow{\mu}t'$ e
+  \begin{itemize}
+  \item $p\xrightarrow{\mu}p'$ e quindi $t'=q|p'$ oppure
+  \item $q\xrightarrow{\mu}q'$ e quindi $t'=q'|p$ oppure
+  \item se $\mu = \tau$: $p\xrightarrow{\alpha}p''$ e
+    $q\xrightarrow{\overline{\alpha}}q''$ per qualche $\alpha$  e quindi $t'=q''|p''$.
+  \end{itemize}
+ La tesi viene dal fatto che qualunque percorso viene scelto
+ $t$ e $t'$ rimangono in forma $p|q$ e $q|p$ e quindi $<t,\ t'>\in R$.
+\item $[p|(q|r)=(p|q)|r]$: La dimostrazione avviene mostrando che
   $R$ \`e chiusa rispetto alle transizioni.
 
   In maniera schematica è
@@ -811,15 +818,48 @@ t_2\xrightarrow{\mu}t$.
     \item $(SINC):$ non possibile perch\'e $\delta\neq\tau$.
     \end{itemize}
   \end{itemize}
-\item ($p|nil=p$):
-\item ($p \setminus L = p\quad\text{ se }\mathcal{L}(p) \cap (L \cup \overline{L}) = \emptyset$):
-\item ($p \setminus K \setminus L = p \setminus (K \cup L)$):
-\item ($p[f] \setminus L = p \setminus f^{-1} (L)[f]$):
-\item ($(p|q) \setminus L = p \setminus L|q \setminus L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset$):
-\item ($p[Id] = p$):
-\item ($p[f] = p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)$):
-\item ($p[f][f'] = p[f \circ f']$):
-\item ($(p|q)[f] = p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$):
+  Non è difficile vedere che ad esempio per il caso $(P_1)$
+  vale che $p\xrightarrow{\mu}p'$ e $p|(q|r)\xrightarrow{\mu}p'(q|r)$
+  e per il caso $(P_2)$ $p\xrightarrow{\mu}p'$ con stesso
+  $\mu$ e quindi anche stesso $p'$ e
+  $(p|q)|r\xrightarrow{\mu}(p'|q)|r$. $<p'|(q|r),\
+  (p'|q)|r>\in R$ perch\'e $R$ contiene tutte le coppie nella forma
+  $<p|(q|r),\ (p|q)|r>$, quindi per questo caso $R$ \`e chiusa per le
+  transizioni. In modo analogo si può dimostrare i casi
+  $(Q_1)$-$(Q_2)$ e quelli $(R_1)$-$(R_2)$. Per gli altri casi \`e necessario notare che ad
+  esempio per il caso $(QR_1)$ si ha una sincronizzazione tra
+  $q$ ed $r$, cos\`i come per il caso $(QR_2)$, questo
+  significa che $\alpha$ e $\gamma$ coincidono, e quindi
+  $q_1''=q_2'''$ e $r_1''=r_2''$. In modo analogo si dimostra che:
+  $r_1''=r_2''=r_1'''$, $p_1''=p_2''=p_2'''$, $q_1'''=q_2''$. Quindi
+  anche per i casi $(QR_1)$-$(QR_2)$,
+  $(PQ_1)$-$(PQ_2)$ e
+  $(PR_1)$-$(PR_2)$ vale che $R$ \`e chiusa per le
+  transizioni.
+\item $[p|nil=p]$: Si dimostra con il fatto che $R$ \`e chiusa per
+  transizioni. L'unica regola della semantica applicabile a $p|nil$ è
+  $(PAR1)$ quindi $p|nil\xrightarrow{\mu}p'|nil$ e
+  $p\xrightarrow{\mu}p'$ e $<p'|nil,\ p'>\in R$.
+\item $[p \setminus L = p\quad\text{ se }\mathcal{L}(p) \cap (L \cup
+  \overline{L}) = \emptyset]$: Se $p\xrightarrow{\mu}p'$ allora per la
+  regola $(RES)$ della semantica $p\setminus
+  L\xrightarrow{\mu}p'\setminus L$ solo se $\mu,\overline{\mu}\not\in
+  L$ equivalentemente se $\mu\not\in(L\cup\overline{L})$. Applicando
+  la definizione 12.18 di sorta si evince che se
+  $\mathcal{L}(p)\cap(L\cup\overline{L})=\emptyset$ significa che il
+  processo $p$ non potr\`a mai fare un'azione di $L$ o una sua negata,
+  quindi vale sempre che $p\setminus L\xrightarrow{\mu}p'\setminus L$,
+  e la tesi vale perch\'e $<p'\setminus L,\ p'>\in R$ e dalla
+  definizione di sorta se
+  $\mathcal{L}(p)\cap(L\cup\overline{L})=\emptyset$ allora
+  $\mathcal{L}(p')\cap(L\cup\overline{L})=\emptyset$.
+\item $[p \setminus K \setminus L = p \setminus (K \cup L)]$:
+\item $[p[f] \setminus L = p \setminus f^{-1} (L)[f]]$:
+\item $[(p|q) \setminus L = p \setminus L|q \setminus L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset]$:
+\item $[p[Id] = p]$:
+\item $[p[f] = p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)]$:
+\item $[p[f][f'] = p[f \circ f']]$:
+\item $[(p|q)[f] = p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)]$:
 \end{enumerate}
 
 \sectionline
