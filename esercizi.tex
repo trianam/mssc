@@ -889,14 +889,14 @@ t_2\xrightarrow{\mu}t$.
 \item \enbox{$p[f] \backslash L = p \backslash f^{-1} (L)[f]$}: Sul
   membro sinistro \`e possibile applicare solo:
   \begin{equation*}
-    \inferrule*[right={$(\hat f(\mu),\ \overline{\hat f(\mu)}\ \not\in L)$}]{
+    \inferrule*[right={$(\widehat f(\mu),\ \overline{\widehat f(\mu)}\ \not\in L)$}]{
       \inferrule*{
         p\xrightarrow{\mu}p'
       }{
-        p[f]\xrightarrow{\hat f(\mu)}p'[f]
+        p[f]\xrightarrow{\widehat f(\mu)}p'[f]
       }
     }{
-      p[f]\backslash L\xrightarrow{\hat f(\mu)}p'[f]\backslash L
+      p[f]\backslash L\xrightarrow{\widehat f(\mu)}p'[f]\backslash L
     }
   \end{equation*}
   su quello destro solo
@@ -908,18 +908,18 @@ t_2\xrightarrow{\mu}t$.
         p\backslash f^{-1}(L)\xrightarrow{\mu}p'\backslash f^{-1}(L)
       }
     }{
-      p\backslash f^{-1}(L)[f]\xrightarrow{\hat f(\mu)}p'\backslash f^{-1}(L)[f]
+      p\backslash f^{-1}(L)[f]\xrightarrow{\widehat f(\mu)}p'\backslash f^{-1}(L)[f]
     }
   \end{equation*}
   Si nota che poich\'e $L\subseteq\Lambda$ e $f:\Lambda\to\Lambda$ e
-  per la definizione di $\hat f$ vale che
+  per la definizione di $\widehat f$ vale che
   \begin{align*}
-    (\mu,\ \overline{\mu}\ \not\in f^{-1}(L))&\implies (\hat f(\mu),\ \hat f(\overline{\mu})\ \not\in L)\\
-    &\implies (\hat f(\mu),\ \overline{\hat f(\mu)}\ \not\in L)
+    (\mu,\ \overline{\mu}\ \not\in f^{-1}(L))&\implies (\widehat f(\mu),\ \widehat f(\overline{\mu})\ \not\in L)\\
+    &\implies (\widehat f(\mu),\ \overline{\widehat f(\mu)}\ \not\in L)
   \end{align*}
   e quindi le condizioni dei due membri si equivalgono e
-  $p[f]\backslash L\xrightarrow{\hat f(\mu)}p'[f]\backslash L$ se e
-  solo se $p\backslash f^{-1}(L)[f]\xrightarrow{\hat
+  $p[f]\backslash L\xrightarrow{\widehat f(\mu)}p'[f]\backslash L$ se e
+  solo se $p\backslash f^{-1}(L)[f]\xrightarrow{\widehat
     f(\mu)}p'\backslash f^{-1}(L)[f]$. La tesi viene dal fatto che $R$
   \`e chiusa per transizioni perch\'e $<p'[f]\backslash L,\
   p'\backslash f^{-1}(L)[f]>\in R$.
@@ -965,16 +965,127 @@ t_2\xrightarrow{\mu}t$.
     \inferrule*{
       p\xrightarrow{\mu}p'
     }{
-      p[Id]\xrightarrow{\hat{Id}(\mu)}p'[Id]
+      p[Id]\xrightarrow{\widehat{Id}(\mu)}p'[Id]
     }
   \end{equation*}
-  e per la definizione di $\hat f$ e $Id$, si ha che
-  $\hat{Id}(\mu)=Id(\mu)=\mu$ quindi $p[Id]\xrightarrow{\mu}p'[Id]$ se e
+  e per la definizione di $\widehat f$ e $Id$, si ha che
+  $\widehat{Id}(\mu)=Id(\mu)=\mu$ quindi $p[Id]\xrightarrow{\mu}p'[Id]$ se e
   solo se $p\xrightarrow{\mu}p'$. $R$ \`e chiusa per
   transizioni perch\'e $<p'[Id],\ p'>\in R$.
-\item \enbox{$p[f] = p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)$}:
-\item \enbox{$p[f][f'] = p[f \circ f']$}:
-\item \enbox{$(p|q)[f] = p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$}:
+\item \enbox{$p[f] = p[f']\quad\text{ se }f
+    \upharpoonright_{\mathcal{L}(p)} =
+    f'\upharpoonright_{\mathcal{L}(p)}$}: Si pu\`o applicare $(REL)$
+  al membro sinistro e a quello destro:
+  \begin{equation*}
+    \inferrule*{
+      p\xrightarrow{\mu}p'
+    }{
+      p[f]\xrightarrow{\widehat f(\mu)}p'[f]
+    }
+  \end{equation*}
+  \begin{equation*}
+    \inferrule*{
+      p\xrightarrow{\mu}p'
+    }{
+      p[f']\xrightarrow{\widehat{f'}(\mu)}p'[f']
+    }
+  \end{equation*}
+  Si nota facilmente che se $\widehat f=\widehat{f'}$ allora $p[f]$ e
+  $p[f']$ hanno le stesse $\mu$-derivate. La condizione imposta nella
+  regola indica che la restrizione di $f$ su tutte le possibili azioni
+  di $p$ deve essere uguale alla restrizione di $f'$ su tutte le
+  possibili azioni di $p$, e quindi per ogni possibile $\mu$ vale che
+  $f(\mu)=f'(\mu)$ e quindi $\widehat f(\mu)=\widehat{f'}(\mu)$.
+\item \enbox{$p[f][f'] = p[f' \circ f]$}: Per il membro sinistro si
+  pu\`o applicare $(REL)$ due volte:
+  \begin{equation*}
+    \inferrule*{
+      \inferrule*{
+        p\xrightarrow{\mu}p'
+      }{
+        p[f]\xrightarrow{\widehat f(\mu)}p'[f]
+      }
+    }{
+      p[f][f']\xrightarrow{\widehat{f'}(\widehat f(\mu))}p'[f][f']
+    }
+  \end{equation*}
+  Per il membro destro si pu\`o applicare $(REL)$ una volta
+  \begin{equation*}
+    \inferrule*{
+      p\xrightarrow{\mu}p'
+    }{
+      p[f'\circ f]\xrightarrow{\widehat{(f'\circ f)}(\mu)}p'[f'\circ f]
+    }
+  \end{equation*}
+  Dalla definizione di $\widehat f$ e di funzione composta si verifica
+  facilmente che $\widehat{(f'\circ f)}(\mu)=\widehat{f'}(\widehat
+  f(\mu))$. Quindi $R$ \`e chiusa per transizioni.
+\item \enbox{$(p|q)[f] = p[f]|q[f]\quad\text{ se }f
+    \upharpoonright_{(L \cup \overline{L})}\text{ è biunivoca, dove }L
+    = \mathcal{L}(p) \cup \mathcal{L}(q)$}: Per il membro sinistro si
+  pu\`o applicare $(REL)$:
+  \begin{equation*}
+    \inferrule*{
+      p|q\xrightarrow{\mu}t'
+    }{
+      (p|q)[f]\xrightarrow{\widehat f(\mu)}t
+    }
+  \end{equation*}
+  e per valutare i valori di $t'$ e $t$ \`e necessario vedere quale
+  regole del parallelismo sono usate:
+  \begin{itemize}
+  \item $(PAR1):\quad p\xrightarrow{\mu}p'\quad\implies\quad t'=p'|q\quad\implies\quad t=(p'|q)[f]$
+  \item $(PAR2):\quad q\xrightarrow{\mu}q'\quad\implies\quad t'=p|q'\quad\implies\quad t=(p|q')[f]$
+  \item $(PAR1):\quad \mu=\tau,\ p\xrightarrow{\alpha}p'',\ q\xrightarrow{\overline\alpha}q''\quad\implies$\\
+    \hbox{}\hfill$t'=p''|q''\quad\implies\quad t=(p''|q'')[f]$
+  \end{itemize}
+  
+  Per il membro destro si possono applicare subito le regole per il
+  parallelo:
+  \begin{align*}
+    (PAR1):\qquad&\inferrule*{
+      \inferrule*{
+        p\xrightarrow{\mu}p'
+      }{
+        p[f]\xrightarrow{\widehat f(\mu)}p'[f]
+      }
+    }{
+      p[f]|q[f]\xrightarrow{\widehat f(\mu)}p'[f]|q[f]
+    }\\\\
+    (PAR2):\qquad&\inferrule*{
+      \inferrule*{
+        q\xrightarrow{\mu}q'
+      }{
+        q[f]\xrightarrow{\widehat f(\mu)}q'[f]
+      }
+    }{
+      p[f]|q[f]\xrightarrow{\widehat f(\mu)}p[f]|q'[f]
+    }\\\\
+    (SINC):\qquad&\inferrule*[right={$(\widehat f(\beta)=\overline{\widehat f(\gamma)})$}]{
+      \inferrule*{
+        p\xrightarrow{\beta}p'''
+      }{
+        p[f]\xrightarrow{\widehat f(\beta)}p'''[f]
+      }\qquad
+      \inferrule*{
+        q\xrightarrow{\gamma}q'''
+      }{
+        q[f]\xrightarrow{\widehat f(\gamma)}q'''[f]
+      }
+    }{
+      p[f]|q[f]\xrightarrow{\tau=\widehat f(\tau)}p'''[f]|q'''[f]
+    }
+  \end{align*}
+  la condizione di \emph{biunivocit\`a} (limitatamente a tutte le
+  possibili azioni che possono fare $p$ e $q$) imposta ad $f$
+  garantisce che se $\widehat f(\beta)=\overline{\widehat
+    f(\gamma)}=\widehat f(\overline\gamma)$ allora
+  $\beta=\overline\gamma$ e quindi $p$ e $q$ si possono sincronizzare
+  solo sugli stessi $\alpha$ e $\overline\alpha$ visti per il membro
+  sinistro, e quindi $p''=p'''$ e $q''=q'''$.
+  
+  Detto questo allora i due membri hanno le stesse $\mu$-derivate e quindi la
+  legge vale.
 \end{enumerate}
 
 \sectionline
