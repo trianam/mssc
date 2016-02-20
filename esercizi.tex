@@ -923,7 +923,43 @@ t_2\xrightarrow{\mu}t$.
     f(\mu)}p'\backslash f^{-1}(L)[f]$. La tesi viene dal fatto che $R$
   \`e chiusa per transizioni perch\'e $<p'[f]\backslash L,\
   p'\backslash f^{-1}(L)[f]>\in R$.
-\item \enbox{$(p|q) \backslash L = p \backslash L|q \backslash L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset$}:
+\item \enbox{$(p|q) \backslash L = p \backslash L|q \backslash
+    L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)}
+    \cap (L \cup \overline L) = \emptyset$}: Per il membro sinistro si pu\`o
+  applicare
+  \begin{equation*}
+    \inferrule*[right={$(\mu,\overline{\mu}\not\in L)$}]{
+      p|q\xrightarrow{\mu}t'
+    }{
+      (p|q)\backslash L\xrightarrow{\mu}t
+    }
+  \end{equation*}
+  e quindi si pu\`o applicare una delle regole del parallelismo per
+  ottenere i possibili valori di $t'$ e $t$
+  \begin{itemize}
+  \item $(PAR1):\quad p\xrightarrow{\mu}p'\quad\implies\quad t'=p'|q\quad\implies\quad t=(p'|q)\backslash L$
+  \item $(PAR2):\quad q\xrightarrow{\mu}q'\quad\implies\quad t'=p|q'\quad\implies\quad t=(p|q')\backslash L$
+  \item $(SINC):\quad p\xrightarrow{\alpha}p'',\ q\xrightarrow{\overline{\alpha}}q''\implies t'=p''|q''\implies t=(p''|q'')\backslash L$
+  \end{itemize}
+
+  Per il membro destro si applica subito una delle regole del
+  parallelismo e se $p\backslash L|q\backslash L\xrightarrow{\mu} t$ allora
+  \begin{itemize}
+  \item $(PAR1):\quad\frac{p\xrightarrow{\mu}p'}{p\backslash L\xrightarrow{\mu}p'\backslash L}(\mu,\overline\mu\not\in L)\quad\implies\quad t=p'\backslash L|q\backslash L$
+  \item $(PAR2):\quad\frac{q\xrightarrow{\mu}q'}{q\backslash L\xrightarrow{\mu}q'\backslash L}(\mu,\overline\mu\not\in L)\quad\implies\quad t=p\backslash L|q'\backslash L$
+  \item $(SINC):\quad\frac{p\xrightarrow{\alpha}p''}{p\backslash L\xrightarrow{\alpha}p''\backslash L}(\alpha,\overline\alpha\not\in L),\ \frac{q\xrightarrow{\alpha}q''}{q\backslash L\xrightarrow{\alpha}q''\backslash L}(\overline\alpha,\alpha\not\in L)\quad\implies$\\
+    \hbox{}\hfill$t=p''\backslash L|q''\backslash L$
+  \end{itemize}
+  
+  La regola \`e quasi verificata perch\'e $R$ sarebbe chiusa per tutte
+  le transizioni se non fosse per le condizioni aggiuntive imposte sul
+  membro destro nella sincronizzazione. Tali condizioni impediscono a
+  $p$ e $q$ di sincronizzarsi su $\alpha$ quando questi o il suo
+  complementare appartengono ad $L$, ma questa condizione \`e coperta da
+  quella pi\`u forte imposta nella regola: $\mathcal{L}(p) \cap \overline{\mathcal{L}(q)}
+    \cap (L \cup \overline L) = \emptyset$. Infatti per la definizione
+    di sorta, questa impone che nei processi $p$ e $q$ non compaiano
+    mai coppie di processi complementari contenuti in $L$.
 \item \enbox{$p[Id] = p$}: \`E possibile applicare
   \begin{equation*}
     \inferrule*{
