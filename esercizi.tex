@@ -31,13 +31,11 @@
 \newcommand{\sectionline}{
   \begin{center}
     \resizebox{0.5\linewidth}{5ex}{
-      \hyperref[toc]{
-        \begin{tikzpicture}
-          \node  (C) at (0,0) {};
-          \node (D) at (10,0) {};
-          \path (C) to [ornament=84] (D);
-        \end{tikzpicture}
-      }
+      \begin{tikzpicture}
+        \node  (C) at (0,0) {};
+        \node (D) at (10,0) {};
+        \path (C) to [ornament=84] (D);
+      \end{tikzpicture}
     }
   \end{center}
 }
@@ -743,15 +741,15 @@ a partire da quelle nelle Tabelle~12.6, 12.7 e~12.8.
 \item $p[f] \backslash L \ =\  p \backslash f^{-1} (L)[f]$
 \item $(p|q) \backslash L \ =\  p \backslash L|q \backslash L\quad\text{ se }\mathcal{L}(p) \cap \overline{\mathcal{L}(q)} \cap (L \cup L) = \emptyset$
 \item $p[Id] \ =\  p$
-\item $p[f] \ =\  p[f']\quad\text{ se }f \upharpoonright \mathcal{L}(p) = f'\upharpoonright \mathcal{L}(p)$
+\item $p[f] \ =\  p[f']\quad\text{ se }f \upharpoonright_{\mathcal{L}(p)} = f'\upharpoonright_{\mathcal{L}(p)}$
 \item $p[f][f'] \ =\  p[f \circ f']$
-\item $(p|q)[f] \ =\  p[f]|q[f]\quad\text{ se }f \upharpoonright (L \cup \overline{L})\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$
+\item $(p|q)[f] \ =\  p[f]|q[f]\quad\text{ se }f \upharpoonright_{(L \cup \overline{L})}\text{ è biunivoca, dove }L = \mathcal{L}(p) \cup \mathcal{L}(q)$
 \end{enumerate}
 sono corrette rispetto a $\sim$.
 \subsection*{Soluzione:}
 Per ognuna delle regole $t_1\ =\ t_2$ \`e necessario verificare che esiste una
 bisimulazione forte $R$ tale che $<t_1,t_2>\in R$. La struttura della
-dimostrazione \`e simile per tutti i punti, si definisce
+dimostrazione \`e simile per tutti i punti: si definisce
 $$
 R\triangleq\{<t_1,t_2>:t_1,t_2\in\mathcal{P}_{CCS}\}\cup Id
 $$
@@ -1109,6 +1107,5 @@ Si ha che:
 \end{align*}
 quindi vale che $E_4\vdash p + \tau.(p + q) = \tau.(p + q)$.
  
-\sectionline
 \end{document}
 
